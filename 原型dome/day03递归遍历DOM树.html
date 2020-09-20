@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">一级
+        <div>1
+            <div>11
+                <p>111
+                    <b>1111</b>
+                    <b>2222</b>
+                </p>
+                <p>112
+                    <b>1112</b>
+                    <b>111222</b>
+                </p>
+            </div>
+        </div>
+        <div>2
+            <p>我是pp
+                <b>我是bb</b>
+            </p>
+        </div>
+        <p>3
+        <p>我爱你</p>
+        <p>一万年
+            <b>这不是真的</b>
+        </p>
+        </p>
+    </div>
+
+    <script>
+        /*
+        遍历DOM树：获取某个元素的所有后代元素
+        webAPI获取方式 元素.children 只能获取子元素
+        写一个函数：获取某个元素的子元素，子元素又有子元素，又可以继续调用这个函数
+
+        获取子元素的子元素，以此类推形成递归调用
+        */
+
+        // function getHouDai(ele) {
+        //     for (let i = 0; i < ele.children.length; i++) {
+        //         arr.push(ele.children[i])
+        //         getHouDai(ele.children[i])
+        //     }
+        // }
+
+        // let arr = [];
+        // getHouDai(document)
+        // console.log('arr', arr);
+
+
+        // 闭包
+        function getHD() {
+            let arr = [];
+            function getHouDai(ele) {
+                for (let i = 0; i < ele.children.length; i++) {
+                    arr.push(ele.children[i])
+                    getHouDai(ele.children[i])
+                }
+                return arr
+            }
+            return getHouDai;
+        }
+        // getHD()
+    //    console.log( getHD.getHouDai(document));
+        console.log(getHD()(document));
+    </script>
+</body>
+
+</html>

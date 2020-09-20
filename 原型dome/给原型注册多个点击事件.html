@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+           div{
+            display: block;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top: 10px;
+        }
+        .one{
+            background-color: green;
+        }
+
+        .two{
+            border: 10px solid yellow;
+        }
+    </style>
+</head>
+<body>
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <script>
+        /*
+        需求1: 给HM构造函数原型添加一个注册点击事件的方法click
+        需求2 只需要调用new HM('div').click()
+        就可以一次性给四个盒子注册点击事件
+        并且多次调用click, 事件不会覆盖，而是依次触发
+
+        思路分析：
+        // 需求1  
+        1 获取页面DOM元素列表
+        2 遍历列表，添加this
+        3 手动添加length
+
+         需求2
+         1 给原型添加注册点击事件（支持多个点击事件）
+         2 通过this 调用这个方法的实例对象
+
+         通过 new ELE给页面每个盒子注册点击事件
+
+        */
+
+        function ELE(selector){
+            let List= document.querySelectorAll(selector);
+            for(let i = 0;i<List.length;i++){
+               this[i]=List[i]
+            }
+            this.length=List.length
+        }
+
+        ELE.prototype.click=function(fn){
+            for(let i = 0;i<this.length;i++){
+               this[i].addEventListener('click',fn)
+            }
+        }
+        new ELE('div').click(function(){
+            console.log(this.innerText);
+        })
+
+        new ELE('div').click(function(){
+            console.log('第二次点击事件');
+        })
+    </script>
+</body>
+</html>

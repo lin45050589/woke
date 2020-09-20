@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1-n之间的累加和
+        function getSum(n) {
+            // 递归  自己调用自己
+            return n == 1 ? 1 : getSum(n - 1) + n;
+
+        }
+        let sum1 = getSum(100);
+        console.log('sun1', sum1);
+
+
+        // 求阶乘
+        function getJieChen(n) {
+            return n == 1 ? 1 : n * getJieChen(n - 1)
+        }
+        let n1 = getJieChen(5);
+        console.log('n1', n1);
+
+
+        let res = (function (n) {
+            return n == 1 ? 1 : n * arguments.callee(n - 1)
+        })(6)
+        console.log('res', res);
+    </script>
+</body>
+
+</html>

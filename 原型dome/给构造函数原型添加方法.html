@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top: 10px;
+        }
+
+        .one {
+            background-color: green;
+        }
+
+        .two {
+            border: 10px solid yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn1">添加类名 one</button>
+    <button id="btn2">添加类名 two</button>
+    <button id="btn3">移除类名 one</button>
+    <button id="btn4">切换类名 two</button>
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <script>
+        /**
+       需求 : 给ELE构造函数原型添加三个方法
+       addClass()  添加类名
+       removeClass()  移除类名
+       toggleClass()  切换类名
+
+       思路分析;
+
+        1 获取页面DOM元素列表
+        2 遍历列表，添加this
+        3 手动添加length
+        4 给ELE构造函数原型添加 方法
+            addClass 添加类型  判定类名是是否存在 -1 为存在  
+            removeClass 移除类名  replace(className, '')
+            toggleClass 切换类名  判断是否有类名， 有就移除， 没有添加 判断条件取反 !=-1 代表有
+
+        5 原型添加点击事件
+            调用this 循环遍历this.length
+            给this[i]添加事件监听 addEventListener
+            参数为：fn函数
+
+        */
+
+
+        function ELE(selector) {
+            let List = document.querySelectorAll(selector);
+            for (let i = 0; i < List.length; i++) {
+                this[i] = List[i]
+            }
+            this.length = List.length
+        }
+
+
+        // 注册事件
+        ELE.prototype.click = function (fn) {
+            for (let i = 0; i < this.length; i++) {
+                this[i].addEventListener('click', fn)
+            }
+        }
+
+        // addClass 添加类名
+        ELE.prototype.addClass = function (className) {
+            for (let i = 0; i < this.length; i++) {
+                //判断是否为重复类名
+                if (this[i].className.indexOf(className) == -1) {
+                    this[i].className += ' ' + className
+                }
+            }
+        }
+
+        // 移除类名
+        ELE.prototype.removeClass = function (className) {
+            for (let i = 0; i < this.length; i++) {
+                this[i].className = this[i].className.replace(className, '').trim();
+            }
+        }
+
+        // 切换类名 有则移除 无则添加
+        ELE.prototype.toggleClass = function (className) {
+            for (let i = 0; i < this.length; i++) {
+                //判断是否为有类名，有就移除 没有添加类名
+                if (this[i].className.indexOf(className) != -1) {   //有
+                    this[i].className = this[i].className.replace(className, '').trim()
+                } else {
+                    this[i].className += ' ' + className
+                }
+            }
+        }
+
+        new ELE('#btn1').click(function () {
+            new ELE('div').addClass('one')
+        })
+        new ELE('#btn2').click(function () {
+            new ELE('div').addClass('two')
+        })
+
+        new ELE('#btn3').click(function () {
+            new ELE('div').removeClass('one')
+        })
+        new ELE('#btn4').click(function () {
+            new ELE('div').toggleClass('two')
+        })
+
+        /*
+        总结： 封装了一个ELE构造函数之后，操作页面元素与之间只需要调用原型中的方法 , 节省代码
+        
+        
+        
+        */
+    </script>
+</body>
+
+</html>
