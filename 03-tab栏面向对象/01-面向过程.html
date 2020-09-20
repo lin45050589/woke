@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 1003px;
+            height: 287px;
+            background: url('./images/box.png') no-repeat center;
+            background-size: cover;
+            margin: 50px auto;
+            padding: 45px 0 0 200px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        ul .item {
+            list-style: none;
+            float: left;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #ul1>li {
+            margin-right: 90px;
+        }
+
+        #ul2>li {
+            margin-top: 55px;
+            margin-right: 90px;
+        }
+
+        #ul3>li {
+            margin-top: 55px;
+            margin-right: 25px;
+        }
+
+        #clear {
+            position: absolute;
+            top: 40px;
+            right: 29px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #302623;
+        }
+
+        i {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: solid 1px #333;
+        }
+
+        #renzhe_list {
+            width: 1000px;
+            margin: -20px auto;
+        }
+
+        #renzhe_list>li {
+            list-style: none;
+            position: relative;
+            float: left;
+            margin-left: 9px;
+            margin-bottom: 30px;
+            width: 115px;
+            height: 145px;
+            cursor: pointer;
+        }
+
+        #renzhe_list>li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        #renzhe_list>li a div {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 2px solid black;
+            background-color: #ecd1aa;
+            padding: 10px;
+        }
+
+        #renzhe_list>li a img {
+            width: 80px;
+            height: 80px;
+        }
+
+        #renzhe_list p {
+            font-size: 16px;
+            margin: 5px auto;
+            text-align: center;
+            font-weight: bold;
+            color: #42140d;
+        }
+
+        /* 点击li元素，给i标签添加一个伪元素来显示图表 */
+        li.active i::after {
+            position: absolute;
+            content: '';
+            background: url(./images/select.png) no-repeat center / cover;
+            width: 21px;
+            height: 20px;
+            left: 0px;
+            top: 0px;
+        }
+
+        /* 清除浮动 */
+        .clearfix::after {
+            content: '';
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        /* 清除ul默认间距 */
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <a href="javascript:void(0);" id="clear">清除筛选</a>
+        <ul class="clearfix" id="ul1">
+            <li class="item"><i class="icon"></i><span>S</span></li>
+            <li class="item"><i class="icon"></i><span>A</span></li>
+            <li class="item"><i class="icon"></i><span>B</span></li>
+            <li class="item"><i class="icon"></i><span>C</span></li>
+        </ul>
+        <ul class="clearfix" id="ul2">
+            <li class="item"><i class="icon"></i><span>男忍者</span></li>
+            <li class="item"><i class="icon"></i><span>女忍者</span></li>
+        </ul>
+        <ul class="clearfix" id="ul3">
+            <li class="item"><i class="icon"></i><span>高伤害</span></li>
+            <li class="item"><i class="icon"></i><span>高连击</span></li>
+            <li class="item"><i class="icon"></i><span>高爆发</span></li>
+            <li class="item"><i class="icon"></i><span>起手强</span></li>
+            <li class="item"><i class="icon"></i><span>高灵活</span></li>
+            <li class="item"><i class="icon"></i><span>技能覆盖广</span></li>
+        </ul>
+    </div>
+
+    <ul class="clearfix" id="renzhe_list">
+        <li>
+            <a href="#">
+                <div>
+                    <img src="http:////game.gtimg.cn/images/hyrz/zlkdatasys/images/image/20200601/ef2494dc7c41819701116554545d015a.png"
+                        alt="">
+                </div>
+                <p>奇拉比「少年」</p>
+            </a>
+        </li>
+    </ul>
+
+    <script src="./renzhe.js"></script>
+    <script>
+        //1.获取元素
+        var liList1 = document.querySelectorAll('#ul1>li');//忍者级别
+        var liList2 = document.querySelectorAll('#ul2>li');//忍者性别
+        var liList3 = document.querySelectorAll('#ul3>li');//忍者特性
+        var clear = document.querySelector('#clear');//清除筛选
+        var renzhe_list = document.querySelector('#renzhe_list');//忍者ul
+
+        //声明一个全局数组来存储三个ul选择的下标(用于清除筛选)
+        var indexArr = [];
+        //声明一个全局数组来存储三个ul选择的 忍者信息
+        var typeArr = ['', '', ''];
+        //默认加载所有忍者数据
+        loadData();
+
+
+        //2.注册事件
+        //2.1 点击 忍者级别
+        for (var i = 0; i < liList1.length; i++) {
+            liList1[i].onclick = function () {
+                //3.1 排他思想修改样式
+                for (var i = 0; i < liList1.length; i++) {
+                    if (this == liList1[i]) {//是自己
+                        //有active则移除，无active则添加
+                        if (this.className.indexOf('active') != -1) {//有
+                            this.className = this.className.replace('active', '');
+                            typeArr[0] = '';
+                        } else {
+                            this.className += ' active';
+                            //3.2 修改checkArr
+                            indexArr[0] = i;
+                            typeArr[0] = this.querySelector('span').innerText;
+                        }
+                    } else {
+                        liList1[i].className = liList1[i].className.replace('active', '');
+                    };
+                };
+
+                //3.3 加载数据
+                loadData();
+            };
+        };
+
+        //2.2 点击 忍者性别
+        for (var i = 0; i < liList2.length; i++) {
+            liList2[i].onclick = function () {
+                //3.1 排他思想修改样式
+                for (var i = 0; i < liList2.length; i++) {
+                    if (this == liList2[i]) {//是自己
+                        //有active则移除，无active则添加
+                        if (this.className.indexOf('active') != -1) {//有
+                            this.className = this.className.replace('active', '');
+                            typeArr[1] = '';
+                        } else {
+                            this.className += ' active';
+                            //3.2 修改checkArr
+                            indexArr[1] = i;
+                            typeArr[1] = this.querySelector('span').innerText;
+                        }
+                    } else {
+                        liList2[i].className = liList2[i].className.replace('active', '');
+                    };
+                };
+
+                //3.3 加载数据
+                loadData();
+            };
+        };
+        //2.3 点击 忍者特性
+        for (var i = 0; i < liList3.length; i++) {
+            liList3[i].onclick = function () {
+                //3.1 排他思想修改样式
+                for (var i = 0; i < liList3.length; i++) {
+                    if (this == liList3[i]) {//是自己
+                        //有active则移除，无active则添加
+                        if (this.className.indexOf('active') != -1) {//有
+                            this.className = this.className.replace('active', '');
+                            typeArr[2] = '';
+                        } else {
+                            this.className += ' active';
+                            //3.2 修改checkArr
+                            indexArr[2] = i;
+                            typeArr[2] = this.querySelector('span').innerText;
+                        }
+                    } else {
+                        liList3[i].className = liList3[i].className.replace('active', '');
+                    };
+                };
+
+                //3.3 加载数据
+                loadData();
+            };
+        };
+
+        //2.4 点击 清除筛选
+        clear.onclick = function () {
+            //(1)遍历checkArr，获取每一个下标，并且取消对应样式
+            //有可能用户没有选择，此时是数组元素是undefined。使用逻辑或避免代码报错
+            var index1 = indexArr[0] || 0;
+            liList1[index1].className = 'item';
+
+            var index2 = indexArr[1] || 0;
+            liList2[index2].className = 'item';
+
+            var index3 = indexArr[2] || 0;
+            liList3[index3].className = 'item';
+
+            //(2)清空typeArr，用于加载所有数据
+            typeArr = ['', '', ''];
+
+            loadData();
+        };
+
+        /**
+        * @description: 加载忍者数据
+        * @return: 
+        */
+        function loadData() {
+            //1.先清空上一次数据
+            renzhe_list.innerHTML = '';
+            //2.加载忍者数据
+            for (var i = 0; i < renzheArr.length; i++) {
+                var obj = renzheArr[i];//每一个忍者对象
+                // console.log(data);
+                if (obj.type.indexOf(typeArr[0]) != -1 && obj.gender.indexOf(typeArr[1]) != -1 && obj.skill.indexOf(typeArr[2]) != -1) {
+                    //(1)内存中创建空对象
+                    var newLi = document.createElement('li');
+                    //(2)设置内容
+                    newLi.innerHTML = '<a href="#" class="">' +
+                        '<div>' + '<img src=' + obj.icon + '>' +
+                        '</div>' +
+                        '<p>' + obj.name + '</p>' +
+                        '</a>';
+                    //(3)添加到DOM树
+                    renzhe_list.appendChild(newLi);
+                };
+            };
+        };
+    </script>
+</body>
+
+</html>

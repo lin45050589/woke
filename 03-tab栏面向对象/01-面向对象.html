@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 1003px;
+            height: 287px;
+            background: url('./images/box.png') no-repeat center;
+            background-size: cover;
+            margin: 50px auto;
+            padding: 45px 0 0 200px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        ul .item {
+            list-style: none;
+            float: left;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #ul1>li {
+            margin-right: 90px;
+        }
+
+        #ul2>li {
+            margin-top: 55px;
+            margin-right: 90px;
+        }
+
+        #ul3>li {
+            margin-top: 55px;
+            margin-right: 25px;
+        }
+
+        #clear {
+            position: absolute;
+            top: 40px;
+            right: 29px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #302623;
+        }
+
+        i {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: solid 1px #333;
+        }
+
+        #renzhe_list {
+            width: 1000px;
+            margin: -20px auto;
+        }
+
+        #renzhe_list>li {
+            list-style: none;
+            position: relative;
+            float: left;
+            margin-left: 9px;
+            margin-bottom: 30px;
+            width: 115px;
+            height: 145px;
+            cursor: pointer;
+        }
+
+        #renzhe_list>li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        #renzhe_list>li a div {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 2px solid black;
+            background-color: #ecd1aa;
+            padding: 10px;
+        }
+
+        #renzhe_list>li a img {
+            width: 80px;
+            height: 80px;
+        }
+
+        #renzhe_list p {
+            font-size: 16px;
+            margin: 5px auto;
+            text-align: center;
+            font-weight: bold;
+            color: #42140d;
+        }
+
+        /* 点击li元素，给i标签添加一个伪元素来显示图表 */
+        li.active i::after {
+            position: absolute;
+            content: '';
+            background: url(./images/select.png) no-repeat center / cover;
+            width: 21px;
+            height: 20px;
+            left: 0px;
+            top: 0px;
+        }
+
+        /* 清除浮动 */
+        .clearfix::after {
+            content: '';
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        /* 清除ul默认间距 */
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <a href="javascript:void(0);" id="clear">清除筛选</a>
+        <ul class="clearfix" id="ul1">
+            <li class="item"><i class="icon"></i><span>S</span></li>
+            <li class="item"><i class="icon"></i><span>A</span></li>
+            <li class="item"><i class="icon"></i><span>B</span></li>
+            <li class="item"><i class="icon"></i><span>C</span></li>
+        </ul>
+        <ul class="clearfix" id="ul2">
+            <li class="item"><i class="icon"></i><span>男忍者</span></li>
+            <li class="item"><i class="icon"></i><span>女忍者</span></li>
+        </ul>
+        <ul class="clearfix" id="ul3">
+            <li class="item"><i class="icon"></i><span>高伤害</span></li>
+            <li class="item"><i class="icon"></i><span>高连击</span></li>
+            <li class="item"><i class="icon"></i><span>高爆发</span></li>
+            <li class="item"><i class="icon"></i><span>起手强</span></li>
+            <li class="item"><i class="icon"></i><span>高灵活</span></li>
+            <li class="item"><i class="icon"></i><span>技能覆盖广</span></li>
+        </ul>
+    </div>
+
+    <ul class="clearfix" id="renzhe_list">
+        <li>
+            <a href="#">
+                <div>
+                    <img src="http:////game.gtimg.cn/images/hyrz/zlkdatasys/images/image/20200601/ef2494dc7c41819701116554545d015a.png"
+                        alt="">
+                </div>
+                <p>奇拉比「少年」</p>
+            </a>
+        </li>
+    </ul>
+
+    <!-- 导入忍者数组 -->
+    <script src="./renzhe.js"></script>
+    <script src="./HM.js"></script>
+
+    <script>
+        //功能一：三个ul列表点击事件
+        HM('#box li').click(function () {
+            //(1)给自己切换类名
+            HM(this).toggleClass('active');
+            //(2)给其他兄弟元素移除类名
+            HM(this).siblings().removeClass('active');
+            //(3)加载数据
+            loadData();
+        });
+
+        //功能二：清除筛选点击事件
+        HM('#clear').click(function(){
+            //(1)移除类名
+            HM('#box li').removeClass('active');
+            //(2)加载数据
+            loadData();
+        });
+
+        //页面一加载：默认显示所有数据
+        loadData();
+
+        //功能三： 加载对应数据
+        /**
+        * @description: 加载忍者数据
+        * @return: 
+        */
+        function loadData() {
+            //1.先清空上一次数据
+            HM('#renzhe_list')[0].innerHTML = '';
+            //2.获取包含active类名的元素
+            var li1 = HM('#ul1 li').filterClass('active')[0];
+            var li2 = HM('#ul2 li').filterClass('active')[0];
+            var li3 = HM('#ul3 li').filterClass('active')[0];
+            //3.如果有选中的元素就获取文本， 没有选中的元素就获取 空字符串
+            var type = li1 && li1.innerText || '';
+            var sex = li2 && li2.innerText || '';
+            var skill = li3 && li3.innerText || '';
+            //3.加载忍者数据
+            for (var i = 0; i < renzheArr.length; i++) {
+                var obj = renzheArr[i];//每一个忍者对象
+                if (obj.type.indexOf(type) != -1 && obj.gender.indexOf(sex) != -1 && obj.skill.indexOf(skill) != -1) {
+                    //(1)内存中创建空对象
+                    var newLi = document.createElement('li');
+                    //(2)设置内容
+                    newLi.innerHTML = '<a href="#" class="">' +
+                        '<div>' + '<img src=' + obj.icon + '>' +
+                        '</div>' +
+                        '<p>' + obj.name + '</p>' +
+                        '</a>';
+                    //(2)添加到DOM树
+                    HM('#renzhe_list')[0].appendChild(newLi);
+                };
+            };
+        };
+
+    </script>
+</body>
+
+</html>
