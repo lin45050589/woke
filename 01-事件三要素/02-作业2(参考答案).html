@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./images/mie.png" alt="">
+
+    <script>
+        /*
+        1.分析需求(交互)：
+            1.1 鼠标移入img : (1)图片切换liang.png  (2)body颜色变亮
+            1.2 鼠标移出img : (1)图片切换mie.png  (2)body颜色变黑
+        2.思路分析（事件三要素）
+            获取元素：事件源：
+            注册事件：事件类型
+            事件处理：
+        */
+
+        //1.获取元素
+        var img = document.querySelector('img');
+        //2.注册事件：事件类型
+        //2.1 鼠标移入
+        img.onmouseover = function () {
+            //this: 事件源 img
+            this.src = './images/liang.png';
+            document.body.style.backgroundColor = '#ee2'
+        };
+
+        //2.2 鼠标移出
+        img.onmouseout = function () {
+            //this: 事件源 img
+            this.src = './images/mie.png';
+            document.body.style.backgroundColor = '#000';
+        };
+    </script>
+</body>
+
+</html>

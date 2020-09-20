@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <br>
+    <input type="password">
+    <br>
+    <input type="radio">
+    <br>
+    <input type="checkbox">
+    <br>
+    <input type="button" value="表单按钮">
+    <hr>
+
+    <button id="btn">禁用</button>
+
+    <script>
+        /*
+        1.分析需求(交互)：
+            点击按钮：判断按钮文本
+                启用 ： (1)设置每一个表单元素disabled属性为false (2)自己文本变成禁用
+                禁用 ： (1)设置每一个表单元素disabled属性为true (2)自己文本变成启用
+        2.思路分析（事件三要素）
+            获取元素：事件源：
+            注册事件：事件类型
+            事件处理：
+        */
+
+        //1.获取元素
+        var btn = document.querySelector('#btn');
+        var inputList = document.querySelectorAll('input');
+        //2.注册事件
+        btn.onclick = function () {
+            //3.事件处理:判断按钮文本
+            // this : 谁调用我，我就指向谁。  在事件处理函数中，this指向事件源
+            if (this.innerText == '禁用') {
+                //(1)设置每一个表单元素disabled属性为true
+                for (var i = 0; i < inputList.length; i++) {
+                    inputList[i].disabled = true;
+                };
+                //(2)自己文本变成启用
+                this.innerText = '启用';
+            }else{
+                //(1)设置每一个表单元素disabled属性为false
+                for (var i = 0; i < inputList.length; i++) {
+                    inputList[i].disabled = false;
+                };
+                //(2)自己文本变成禁用
+                this.innerText = '禁用';
+            }
+        };
+
+
+    </script>
+</body>
+
+</html>
