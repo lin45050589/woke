@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 500px;
+            text-align: left;
+            margin: 20px auto;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            background-color: #eee;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        颜色:
+        <input type="radio" name="color" value="red">红色
+        <input type="radio" name="color" value="orange">橙色
+        <input type="radio" name="color" value="yellow">黄色
+        <input type="radio" name="color" value="green">绿色
+    </div>
+    <div class="wrap">
+        边框宽度:
+        <input type="radio" name="border" value="0px">0px
+        <input type="radio" name="border" value="5px">5px
+        <input type="radio" name="border" value="10px">10px
+    </div>
+    <div class="wrap">
+        边框颜色:
+        <input type="radio" name="borderColor" value="cyan">青色
+        <input type="radio" name="borderColor" value="blue">蓝色
+        <input type="radio" name="borderColor" value="purple">紫色
+    </div>
+    <div class="wrap">
+            文本:
+            <input type="radio" name="text" value="">空文本
+            <input type="radio" name="text" value="黑马程序员">黑马程序员
+            <input type="radio" name="text" value="传智播客">传智播客
+            <input type="radio" name="text" value="深圳颜值担当">深圳颜值担当
+        </div>
+    <div>
+        <div id="box"></div>
+    </div>
+
+    <script>
+        /*核心思路 
+        1. 把每一个选择框要设置的值，放入选择框的value属性中。
+        2. 点击每一个选择框，只需要将 this.value 取出来赋值给元素对应的样式属性即可
+        */
+        //1.获取元素
+        var colorList = document.querySelectorAll('[name="color"]');//颜色选择框列表
+        var borderList = document.querySelectorAll('[name="border"]');//边框选择框列表
+        var borderColorList = document.querySelectorAll('[name="borderColor"]');//边框颜色选择框列表
+        var textList = document.querySelectorAll('[name="text"]');//文本选择框列表
+        var box = document.querySelector('#box');//div盒子
+
+        //2.注册事件
+
+        //2.1 颜色
+        for(var i = 0;i<colorList.length;i++){
+            colorList[i].onclick = function(){
+                //this:事件源 当前点击的元素
+                box.style.backgroundColor = this.value;
+            };
+        };
+        //2.2 边框
+        for(var i = 0;i<borderList.length;i++){
+            borderList[i].onclick = function(){
+                box.style.borderWidth = this.value;
+            };
+        };
+        //2.3 边框颜色
+        for(var i = 0;i<borderColorList.length;i++){
+            borderColorList[i].onclick = function(){
+                box.style.borderWidth = this.value;
+            };
+        };
+        //2.4 文本
+        for(var i = 0;i<textList.length;i++){
+            textList[i].onclick = function(){
+                box.innerText = this.value;
+            };
+        };
+    </script>
+</body>
+
+</html>
