@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        ul {
+            padding: 0;
+            margin: 0;
+            background-color: #f1f3f7;
+        }
+
+        /* 最外面大盒子 */
+        .herolist-box {
+            width: 1200px;
+            padding: 35px 28px;
+            border: 2px solid #E8E8E8;
+            position: relative;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+
+        /* 英雄类型选择盒子 */
+        .herolist-types {
+            background-color: #EFEFEF;
+            border-radius: 5px;
+            color: #686869;
+        }
+
+        .types-left li {
+            display: block;
+            height: 52px;
+            line-height: 52px;
+            font-size: 16px;
+        }
+
+        .types-left {
+            float: left;
+            width: 80px;
+            height: 106px;
+            text-align: center;
+            background-color: #2C88E2;
+            color: #fff;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .types-ms {
+            float: left;
+            width: 900px;
+            padding: 16px 0;
+            height: 20px;
+            line-height: 21px;
+        }
+
+        .types-ms li {
+            float: left;
+            padding-left: 15px;
+            min-width: 90px;
+            font-size: 14px;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .types-ms label {
+            float: left;
+            cursor: pointer;
+            line-height: 19px;
+        }
+
+        .ms-radio {
+            float: left;
+            width: 18px;
+            height: 18px;
+            margin-right: 7px;
+            border: 1px solid #B3B3B3;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .ms-radio .i {
+            display: inline-block;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50px;
+        }
+
+        /* 选中li元素样式 */
+        .types-ms .current .ms-radio .i {
+            background-color: #358ADD;
+        }
+
+        /* 英雄列表 */
+        .herolist-content {
+            margin-top: 40px;
+            margin-right: -50px;
+        }
+
+        .herolist-content li {
+            float: left;
+            width: 87px;
+            margin-bottom: 25px;
+            margin-right: 30px;
+            list-style: none;
+        }
+
+        .herolist-content a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .herolist-content img {
+            width: 83px;
+            height: 83px;
+            border: 2px solid #258DF2;
+            border-radius: 10px 0 10px 0;
+        }
+
+        /* 搜索框 */
+        .herosearch {
+            position: absolute;
+            top: 86px;
+            right: 60px;
+            border: 1px solid #D2D2D2;
+            padding: 10px;
+            height: 22px;
+            width: 220px;
+        }
+
+        .herosearch-input {
+            float: left;
+            border: none;
+            width: 80%;
+            height: 22px;
+            line-height: 20px;
+            font-size: 12px;
+            color: #747475;
+            background: none;
+            outline: none;
+        }
+
+        .herosearch-icon {
+            float: right;
+            padding-left: 10px;
+            width: 22px;
+            height: 22px;
+            border-left: 1px solid #D5D5D5;
+            background: url(http://game.gtimg.cn/images/yxzj/web201605/page/vl_search_icon.png) no-repeat 12px center;
+        }
+
+        /* 清除浮动 */
+        .clearfix:after {
+            content: '';
+            display: block;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="herolist-box">
+        <div class="clearfix herolist-types">
+            <ul class="types-left">
+                <li>综合</li>
+                <li>定位</li>
+            </ul>
+            <ul class="clearfix types-ms">
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>本周免费</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>新手推荐</label>
+                </li>
+            </ul>
+            <ul class="clearfix types-ms">
+                <li class="current">
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>全部</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>坦克</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>战士</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>刺客</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>法师</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>射手</label>
+                </li>
+                <li>
+                    <span class="ms-radio"><i class="i"></i></span>
+                    <label>辅助</label>
+                </li>
+            </ul>
+            <div class="herosearch">
+                <input type="text" id="search" name="search" class="herosearch-input" placeholder="请输入你想要搜索的英雄名">
+                <a href="javascript:void(0);" class="herosearch-icon" title="点击搜索" id="searchBtn"></a>
+            </div>
+        </div>
+        <div class="herolist-content">
+            <ul class="herolist clearfix">
+                <li>
+                    <a href="javascript:;">
+                        <img src="http://game.gtimg.cn/images/yxzj/img201606/heroimg/527/527.jpg">
+                        蒙恬
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="./HM.js"></script>
+    <!-- 英雄数据 -->
+    <script src="./hero.js"></script>
+</body>
+
+</html>
