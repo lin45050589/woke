@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">我是对象</div>
+    <p>我是p1</p>
+    <p>我是p2</p>
+    <p>我是p3</p>
+    <script>
+        /*
+        需求： 
+        HM是一个构造函数
+        只需要传入一个选择器，就可以获取页面的元素
+        就算是id选择器，这个对象也有length属性，说明底层使用的querSelectorAll这个方法
+
+
+        思路分析：使用对象
+        1 获取页面中所有的的元素   
+        2 循环遍历所有的元素
+        3 赋值 使用 this 
+        4 添加长度 length
+        5 根据id获取页面元素  new
+        6 根据标签获取元素   new
+        */
+        //  构造函数
+        function HM(selector) {
+            // 获取页面中所有的的元素
+            var divList = document.querySelectorAll(selector);
+            // 循环遍历所有页面的元素
+            for (var i = 0; i < divList.length; i++) {
+                this[i] = divList[i];
+            }
+            // 将遍历出来的divList 的长度赋值给当前的元素this
+            this.length = divList.length;
+        };
+
+        // 获取元素通过id
+        var divHM = new HM('#box')
+        console.log(divHM);
+
+        // 获取元素通过标签
+        var pHm = new HM('p')
+        console.log(pHm);
+    </script>
+</body>
+
+</html>

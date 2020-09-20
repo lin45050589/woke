@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+        数组与对象的练习
+
+        */
+        // 声明一个数组
+        // var arr = [10, 20, 30, 40, 50];
+
+        // // 声明一个空对象
+        // var obj = {}
+        // // 数组需要循环遍历
+        // for (i = 0; i < arr.length; i++) {
+        //     // 给obj赋值  先运行右边的arr[i] 在运行obj
+        //     obj[i] = arr[i]
+        // }
+        // console.log(arr, obj);
+
+        // 构建一个函数
+        // var arr = [10, 20, 30];
+        // console.log(arr)
+
+
+        function change(arr) {
+            // 声明一个空对象
+            var obj = {};
+            for (i = 0; i < arr.length; i++) {
+                obj[i] = arr[i];
+            }
+            obj.length = arr.length
+            return obj
+        }
+        var arr = [10, 20, 30];
+        var obj = change(arr);
+        console.log(obj);
+
+    </script>
+</body>
+
+</html>

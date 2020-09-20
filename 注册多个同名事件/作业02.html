@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top: 10px;
+        }
+        .one{
+            background-color: green;
+        }
+
+        .two{
+            border: 10px solid yellow;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn1">添加类名 one</button>
+    <button id="btn2">添加类名 two</button>
+    <button id="btn3">移除类名 one</button>
+    <button id="btn4">切换类名 two</button>
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <script>
+        /**
+        * @description: 1. HM构造函数
+        * @param {type} selector : 选择器字符串
+        * @return: 对象
+        */
+        function HM(selector){
+            //1.先获取页面DOM元素列表
+            var list = document.querySelectorAll(selector);
+            //2.遍历列表，添加给this
+            for(var i = 0;i<list.length;i++){
+                this[i] = list[i];
+            };
+            //3.手动添加length属性
+            this.length = list.length;
+        };
+
+        //2.原型：注册事件
+        HM.prototype.click = function (fn) {
+            //this : 调用这个方法的实例对象
+            for (var i = 0; i < this.length; i++) {
+                this[i].addEventListener('click', fn);
+            };
+        };
+
+        //3.原型：添加类名
+        HM.prototype.addClass = function (clsName) {
+            //this : 调用这个方法的HM对象
+            for (var i = 0; i < this.length; i++) {
+                //如果已经有了就不重复添加(css重复类名只有第一个生效)
+                if( this[i].className.indexOf(clsName) == -1){
+                    this[i].className += ' ' + clsName;//多个类名以空格隔开
+                };
+            };
+        };
+
+        //4.原型：移除类名
+        HM.prototype.removeClass = function (clsName) {
+            //this : 调用这个方法的HM对象
+            for (var i = 0; i < this.length; i++) {
+                //替换空字符串, 替换后的结果需要重新赋值
+                this[i].className = this[i].className.replace(clsName, '').trim();
+            };
+        };
+
+        //5.原型：切换类名  有则移除，无则添加
+        HM.prototype.toggleClass = function (clsName) {
+            //this : 调用这个方法的HM对象
+            for (var i = 0; i < this.length; i++) {
+                if (this[i].className.indexOf(clsName) != -1) {//有
+                    this[i].className = this[i].className.replace(clsName, '').trim();
+                } else {
+                    this[i].className += ' ' + clsName;
+                };
+            };
+        };
+
+        //按钮1点击事件
+        new HM('#btn1').click(function(){
+            //给四个div添加类名one
+            new HM('div').addClass('one');
+        });
+
+        //按钮2点击事件
+        new HM('#btn2').click(function(){
+            //给四个div添加类名two
+            new HM('div').addClass('two');
+        });
+
+        //按钮3点击事件
+        new HM('#btn3').click(function(){
+            //给四个div移除类名one
+            new HM('div').removeClass('one');
+        });
+
+        //按钮4点击事件
+        new HM('#btn4').click(function(){
+            //给四个div切换类名two  
+            /* 切换： 有则移除，无则添加 */
+            new HM('div').toggleClass('two');
+        });
+        
+    </script>
+</body>
+</html>

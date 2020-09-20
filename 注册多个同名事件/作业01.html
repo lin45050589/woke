@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        div{
+            display: block;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top: 10px;
+        }
+        .one{
+            background-color: green;
+        }
+
+        .two{
+            border: 10px solid yellow;
+        }
+    </style>
+</head>
+<body>
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <script>
+        /**
+        * @description: 1. HM构造函数
+        * @param {type} selector : 选择器字符串
+        * @return: 对象
+        */
+        function HM(selector){
+            //1.先获取页面DOM元素列表
+            var list = document.querySelectorAll(selector);
+            //2.遍历列表，添加给this
+            for(var i = 0;i<list.length;i++){
+                this[i] = list[i];
+            };
+            //3.手动添加length属性
+            this.length = list.length;
+        };
+
+        //2.原型：注册点击事件 (支持多个同名事件)
+        HM.prototype.click = function (fn) {
+            //this : 调用这个方法的实例对象
+            for (var i = 0; i < this.length; i++) {
+                this[i].addEventListener('click', fn);
+            };
+        };
+
+        //给页面每一个盒子注册点击事件1
+        new HM('div').click(function(){
+            console.log(this.innerText);
+        });
+
+        //给页面每一个盒子注册点击事件2
+        new HM('div').click(function(){
+            console.log('我是第二个点击事件');
+        });
+    </script>
+</body>
+</html>

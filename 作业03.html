@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">我是对象</div>
+    <p>我是p1</p>
+    <p>我是p2</p>
+    <p>我是p3</p>
+    <script>
+        /*
+        需求：
+        给HM构造函数原型添加css方法
+        作用是设置 实例对象 每一个元素的样式
+
+        hmBox只有一个元素，就只会给这一个元素设置border
+        hmP有三个元素，就只会自动给这三个元素设置背景颜色
+
+
+        分析：使用对象
+        1 获取页面中所有的元素
+        2 循环遍历所有的元素
+        3 赋值  使用this
+        4 添加长度  length
+
+        构造函数原型
+
+
+
+        5 根据id获取页面元素 new
+        6 根据标签获取元素 new
+        7
+
+        */
+        //  构造函数
+        function HM(selector) {
+            // 获取页面中所有的的元素
+            var divList = document.querySelectorAll(selector);
+            // 循环遍历所有页面的元素
+            for (var i = 0; i < divList.length; i++) {
+                this[i] = divList[i];
+            }
+            // 将遍历出来的divList 的长度赋值给当前的元素
+            this.length = divList.length;
+        };
+        HM.prototype.css = function (key, value) {
+            // 循环遍历所有页面的元素
+            for (var i = 0; i < this.length; i++) {
+                this[i].style[key] = value
+            }
+        }
+
+        // 获取元素通过id
+        var divHM = new HM('#box')
+        console.log(divHM);
+        // 添加css样式
+        divHM.css('border', '10px solid pink')
+
+        // 获取元素通过标签
+        var pHm = new HM('p')
+        console.log(pHm);
+        pHm.css('backgroundColor', 'skyblue')
+    </script>
+</body>
+
+</html>
